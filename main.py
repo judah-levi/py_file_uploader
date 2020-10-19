@@ -9,8 +9,9 @@ def upload_file(file: UploadFile=File(...)):
         with open(f'./tmp/{filename}', 'wb') as f:
             [f.write(chunk) for chunk in iter(lambda: file.file.read(10240), b'')]
         return {
-                    "message": "File Uploaded successfully",
-                    "filename": filename
-                }
+            "message": "File Uploaded successfully",
+            "filename": filename,
+            "content-type": file.content_type
+        }
     except:
         raise HTTPException(status_code=400, detail="File upload failed, did you include a file in your req?")
